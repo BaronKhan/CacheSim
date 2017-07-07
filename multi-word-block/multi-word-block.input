@@ -1,0 +1,17 @@
+# 16 bit addresses
+# 3 Bytes/word, 5 words/block, 2 block/set, 2 sets/cache
+# 1 cycle/hit, 2 cycles/read, 3 cycles/write
+write-req 0 ABCDEF
+write-req 3 123456
+read-req 3
+#This should be ignored
+write-req 18 333333
+write-req 33 FEDCBA
+debug-req
+# Hello World
+flush-req
+debug-req
+#read-req 0
+read-req 18
+# write-req 9 1334CA
+write-req 64

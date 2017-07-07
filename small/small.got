@@ -1,0 +1,4 @@
+write-ack 0 miss 1
+write-ack 0 miss 2
+read-ack 0 miss 3 FF
+read-ack 0 miss 2 AA

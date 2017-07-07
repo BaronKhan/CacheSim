@@ -1,0 +1,7 @@
+# 1 bit addresses
+# 1 Bytes/word, 1 words/block, 1 block/set, 1 sets/cache
+# 1 cycle/hit, 1 cycles/read, 1 cycles/write
+write-req 0 FF
+write-req 1 AA
+read-req 0
+read-req 1

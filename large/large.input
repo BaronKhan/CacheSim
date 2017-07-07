@@ -1,0 +1,10 @@
+# 8 bit addresses
+# 4 Bytes/word, 8 words/block, 4 block/set, 8 sets/cache
+# 1 cycle/hit, 8 cycles/read, 16 cycles/write
+write-req 0 11223344
+read-req 0
+write-req 127 11111111
+read-req 127
+read-req 0
+write-req 128 88776655
+read-req 0

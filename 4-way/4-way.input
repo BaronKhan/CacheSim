@@ -1,0 +1,22 @@
+# 8 bit addresses
+# 4 Bytes/word, 2 words/block, 4 block/set, 2 sets/cache
+# 1 cycle/hit, 3 cycles/read, 4 cycles/write
+write-req 0 FF112233
+read-req 0
+write-req 4 22110044
+write-req 8 66221100
+write-req 0 00556677
+write-req 20 55555555
+read-req 0
+read-req 8
+write-req 4 12345678
+write-req 12 11111111
+write-req 35 AAAAAAAA
+write-req 68 00000000
+read-req 68
+debug-req
+read-req 4
+read-req 0
+read-req 84
+flush-req
+debug-req

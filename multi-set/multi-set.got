@@ -1,0 +1,15 @@
+read-ack 0 miss 6 00
+read-ack 0 hit 1 00
+write-ack 0 hit 1
+write-ack 1 miss 6
+write-ack 3 miss 6
+write-ack 3 hit 1
+write-ack 0 miss 9
+read-ack 0 miss 9 BB
+debug-ack-begin
+debug-ack-end
+flush-ack 6
+debug-ack-begin
+debug-ack-end
+read-ack 0 miss 6 44
+read-ack 3 hit 1 CC

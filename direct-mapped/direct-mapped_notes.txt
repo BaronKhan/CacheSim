@@ -1,0 +1,71 @@
+# NOTE: Personal Notes
+
+# 8 bit addresses
+# 2 Bytes/word, 2 words/block, 1 block/set, 2 sets/cache
+# 1 cycle/hit, 2 cycles/read, 2 cycles/write
+
+
+write-req 0 FF11
+#set = 0, byte offset = 0 -> miss, write block, 4 bytes 0-3 to cache from mem, write bnew byte to cache (dirty bit)
+#time = hit time + write time from mem to cache = 3
+
+read-req 0
+#set = 0, byte offset = 0, found -> hit
+#time = hit time = 1
+
+write-req 4 2211
+#set = 1, byte offset = 0, miss -> write block 1, 4 bytes 4-7 to block 1 set 1, set dirty bit
+#time = hit time + write time from mem to cache = 3
+
+write-req 6 4422
+#set = 1, byte offset = 2, hit -> write 2nd word, bytes 6-7 in block 1 of set 1
+#time = hit time = 1
+#note: all addresses are byte-addresses and word aligned -> no odd number addresses
+
+read-req 4
+#hit
+
+read-req 6
+#hit
+
+read-req 0
+#hit
+
+write-req 16 1234
+#set = 0, byte offset = 0, tag does not match -> miss
+#1. write old block to memory (since there's a dirty bit) 2. read new block from memory, 3. write new data to cache (dirty bit)
+#time = hit time + read time + write time = 5
+
+read-req 0
+#set = 0, byte offset = 0, tag does not match -> miss
+#1. dirty bit, so write old block to mem, 2. read new block
+#time = hit time + read time + write time = 5
+
+read-req 16
+#set = 0, byte offset = 0, tag does not match -> miss
+#1. no dirty bit, just read new block from mem
+# time = hit time + write time = 5
+
+
+# S0={}, S1={}, write-block=B0
+write-ack 0 miss 3
+# S0={B0/d}, S1={}, read-block=B0
+read-ack 0 hit 1 FF11
+# S0={B0/d}, S1={}, write-block=B1
+write-ack 1 miss 3
+# S0={B0/d}, S1={B1/d}, write-block=B1
+write-ack 1 hit 1
+# S0={B0/d}, S1={B1/d}, read-block=B1
+read-ack 1 hit 1 2211
+# S0={B0/d}, S1={B1/d}, read-block=B1
+read-ack 1 hit 1 4422
+# S0={B0/d}, S1={B1/d}, read-block=B0
+read-ack 0 hit 1 FF11
+# S0={B0/d}, S1={B1/d}, write-block=B4
+write-ack 0 miss 5
+# S0={B4/d}, S1={B1/d}, read-block=B0
+read-ack 0 miss 5 FF11
+# S0={B0}, S1={B1/d}, read-block=B4
+read-ack 0 miss 3 1234
+# S0={B4}, S1={B1/d}
+

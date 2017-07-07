@@ -1,0 +1,21 @@
+write-ack 0 miss 4
+read-ack 0 hit 1 FF112233
+write-ack 0 hit 1
+write-ack 1 miss 4
+write-ack 0 hit 1
+write-ack 0 miss 4
+read-ack 0 hit 1 00556677
+read-ack 1 hit 1 66221100
+write-ack 0 hit 1
+write-ack 1 hit 1
+write-ack 0 miss 4
+write-ack 0 miss 4
+read-ack 0 hit 1 00000000
+debug-ack-begin
+debug-ack-end
+read-ack 0 hit 1 12345678
+read-ack 0 hit 1 00556677
+read-ack 0 miss 8 00000000
+flush-ack 16
+debug-ack-begin
+debug-ack-end

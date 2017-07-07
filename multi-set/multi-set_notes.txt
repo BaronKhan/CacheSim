@@ -1,0 +1,64 @@
+multi-set cache
+
+    Address bits = 16
+
+    Bytes/Word = 1
+
+    Words/Block = 3
+
+    Blocks/Set = 1
+
+    Sets/Cache = 5
+
+    Hit time (cycles/Access) = 1
+
+    Memory read time in cycles/Block = 5
+
+    Memory write time in cycles/Block = 3
+
+bytes 0 is a word
+bytes 0-2 is a block
+
+read-req 0
+read-req 1
+write-req 1 BB
+write-req 3 AA
+write-req 10 CC
+write-req 9 11
+write-req 16 44
+read-req 1
+debug-req
+flush-req
+debug-req
+read-req 16
+read-req 10
+
+# S0={}, S1={}, S2={}, S3={}, S4={}, read-block=B0
+read-ack 0 miss 6 00
+# S0={B0}, S1={}, S2={}, S3={}, S4={}, read-block=B0
+read-ack 0 hit 1 00
+# S0={B0}, S1={}, S2={}, S3={}, S4={}, write-block=B0
+write-ack 0 hit 1
+# S0={B0/d}, S1={}, S2={}, S3={}, S4={}, write-block=B1
+write-ack 1 miss 6
+# S0={B0/d}, S1={B1/d}, S2={}, S3={}, S4={}, write-block=B3
+write-ack 3 miss 6
+# S0={B0/d}, S1={B1/d}, S2={}, S3={B3/d}, S4={}, write-block=B3
+write-ack 3 hit 1
+# S0={B0/d}, S1={B1/d}, S2={}, S3={B3/d}, S4={}, write-block=B5
+write-ack 0 miss 9
+# S0={B5/d}, S1={B1/d}, S2={}, S3={B3/d}, S4={}, read-block=B0
+read-ack 0 miss 9 BB
+# S0={B0}, S1={B1/d}, S2={}, S3={B3/d}, S4={}
+debug-ack-begin
+# S0={B0}, S1={B1/d}, S2={}, S3={B3/d}, S4={}
+debug-ack-end
+flush-ack 6
+debug-ack-begin
+# S0={B0}, S1={B1}, S2={}, S3={B3}, S4={}
+debug-ack-end
+# S0={B0}, S1={B1}, S2={}, S3={B3}, S4={}, read-block=B5
+read-ack 0 miss 6 44
+# S0={B5}, S1={B1}, S2={}, S3={B3}, S4={}, read-block=B3
+read-ack 3 hit 1 CC
+# S0={B5}, S1={B1}, S2={}, S3={B3}, S4={}

@@ -1,0 +1,18 @@
+# NOTE: Personal Notes
+
+# 8 bit addresses
+# 32 Bytes/word, 2 words/block, 1 block/set, 2 sets/cache
+# 1 cycle/hit, 4 cycles/read, 5 cycles/write
+
+
+bytes 0-31 is a word
+bytes-0-63 is a block
+
+write-req 0 111111111111111111111111BAC1411111111111111111111111111111111111
+read-req 0
+
+# S0={}, S1={}, write-block=B0
+write-ack 0 miss 5
+# S0={B0/d}, S1={}, read-block=B0
+read-ack 0 hit 1 111111111111111111111111BAC1411111111111111111111111111111111111
+# S0={B0/d}, S1={}

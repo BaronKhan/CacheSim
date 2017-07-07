@@ -1,0 +1,9 @@
+write-ack 0 miss 6
+read-ack 0 hit 1 FF
+write-ack 0 miss 6
+write-ack 0 miss 6
+write-ack 0 miss 6
+read-ack 0 miss 10 00
+read-ack 0 hit 1 00
+read-ack 0 miss 10 FF
+read-ack 0 hit 1 00

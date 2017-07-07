@@ -1,0 +1,93 @@
+4-way associative cache
+
+    Address bits = 8
+
+    Bytes/Word = 4
+
+    Words/Block = 2
+
+    Blocks/Set = 4
+
+    Sets/Cache = 2
+
+    Hit time (cycles/Access) = 1
+
+    Memory read time in cycles/Block = 3
+
+    Memory write time in cycles/Block = 4
+
+bytes 0-3 is a word
+bytes 0-7 is a block
+
+write-req 0 FF112233
+read-req 0
+write-req 4 22110044
+write-req 8 66221100
+write-req 0 00556677
+write-req 20 55555555
+read-req 0
+read-req 8
+write-req 4 12345678
+write-req 12 11111111
+write-req 35 AAAAAAAA
+write-req 68 00000000
+read-req 68
+debug-req
+read-req 4
+read-req 0
+read-req 84
+flush-req
+debug-req
+
+
+# S0={,,,}, S1={,,,}, write-block=B0
+write-ack 0 miss 4
+# S0={B0/d,,,}, S1={,,,}, read-block=B0
+read-ack 0 hit 1 FF112233
+# S0={B0/d,,,}, S1={,,,}, write-block=B0
+write-ack 0 hit 1
+# S0={B0/d,,,}, S1={,,,}, write-block=B1
+write-ack 1 miss 4
+# S0={B0/d,,,}, S1={B1/d,,,}, write-block=B0
+write-ack 0 hit 1
+# S0={B0/d,,,}, S1={B1/d,,,}, write-block=B2
+write-ack 0 miss 4
+# S0={B0/d,B2/d,,}, S1={B1/d,,,}, read-block=B0
+read-ack 0 hit 1 00556677 	
+# S0={B0/d,B2/d,,}, S1={B1/d,,,}, read-block=B1
+read-ack 1 hit 1 66221100
+# S0={B0/d,B2/d,,}, S1={B1/d,,,}, write-block=B0
+write-ack 0 hit 1
+# S0={B0/d,B2/d,,}, S1={B1/d,,,}, write-block=B1
+write-ack 1 hit 1
+# S0={B0/d,B2/d,,}, S1={B1/d,,,}, write-block=B4
+write-ack 0 miss 4
+# S0={B0/d,B2/d,B4/d,}, S1={B1/d,,,}, write-block=B8
+write-ack 0 miss 4
+# S0={B0/d,B2/d,B4/d,B8/d}, S1={B1/d,,,}, read-block=B8
+read-ack 0 hit 1 00000000
+debug-ack-begin
+# Cache state: 
+# S0={B0/d,B2/d,B4/d,B8/d}
+# S1={B1/d,,,}
+debug-ack-end
+# S0={B0/d,B2/d,B4/d,B8/d}, S1={B1/d,,,}, read-block=B0
+read-ack 0 hit 1 12345678
+# S0={B0/d,B2/d,B4/d,B8/d}, S1={B1/d,,,}, read-block=B0
+read-ack 0 hit 1 00556677
+# S0={B0/d,B2/d,B4/d,B8/d}, S1={B1/d,,,}, read-block = B10
+read-ack 0 miss 8 00000000
+# S0={B0/d,B10,B4/d,B8/d}, S1={B1/d,,,}
+flush-ack 16
+# S0={B0,B10,B4,B8}, S1={B1,,,}
+debug-ack-begin
+# Cache state: 
+# S0={B0,B10,B4,B8}
+# S1={B1/d,,,}
+debug-ack-end
+
+
+
+
+//to search for block in set, loop through and match tag 
+

@@ -1,0 +1,11 @@
+read-ack 0 miss 7 00
+write-ack 0 hit 2
+write-ack 0 miss 2
+write-ack 0 miss 2
+write-ack 0 miss 2
+write-ack 0 miss 7
+write-ack 0 miss 7
+read-ack 0 hit 2 C3
+write-ack 0 miss 7
+read-ack 0 miss 12 C2
+read-ack 0 hit 2 D0

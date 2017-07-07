@@ -1,0 +1,16 @@
+# 4 bit addresses
+# 1 Bytes/word, 1 words/block, 4 block/set, 1 sets/cache
+# 2 cycle/hit, 5 cycles/read, 5 cycles/write
+read-req 0
+write-req 0 FF
+write-req 1 C1 #don’t read this!!
+write-req 2 C2
+write-req 3 C3
+write-req 4 AE
+#don’t do this either write-req 2 C5
+write-req 0 F3
+#write-req 3 FF
+read-req 3
+write-req 15 D0 # or this write-req 15 0D
+read-req 2
+read-req 15

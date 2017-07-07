@@ -1,0 +1,8 @@
+# S0={}, write-block=B0
+write-ack 0 miss 1
+# S0={B0/d}, write-block=B1
+write-ack 0 miss 2
+# S0={B1/d}, read-block=B0
+read-ack 0 miss 3 FF
+# S0={B0}, read-block=B1
+read-ack 0 miss 2 AA

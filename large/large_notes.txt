@@ -1,0 +1,33 @@
+# NOTE: Personal Notes
+
+# 8 bit addresses
+# 4 Bytes/word, 8 words/block, 4 block/set, 8 sets/cache
+# 1 cycle/hit, 8 cycles/read, 16 cycles/write
+
+
+bytes 0-7 is a word
+bytes-0-31 is a block
+
+write-req 0 11223344
+read-req 0
+write-req 127 11111111
+read-req 127
+read-req 0
+write-req 128 88776655
+read-req 0
+
+# S0={,,,}, S1={,,,}, S2={,,,}, S3={,,,}, S4={,,,}, S5={,,,}, S6={,,,}, S7={,,,}, write-block=B0
+write-ack 0 miss 9
+# S0={B0/d,,,}, S1={,,,}, S2={,,,}, S3={,,,}, S4={,,,}, S5={,,,}, S6={,,,}, S7={,,,}, read-block=B0
+read-ack 0 hit 1 11223344
+# S0={B0/d,,,}, S1={,,,}, S2={,,,}, S3={,,,}, S4={,,,}, S5={,,,}, S6={,,,}, S7={,,,}, write-block=B3
+write-ack 3 miss 9
+# S0={B0/d,,,}, S1={,,,}, S2={,,,}, S3={B3/d,,,}, S4={,,,}, S5={,,,}, S6={,,,}, S7={,,,}, read-block=B3
+read-ack 3 hit 1 11111111
+# S0={B0/d,,,}, S1={,,,}, S2={,,,}, S3={B3/d,,,}, S4={,,,}, S5={,,,}, S6={,,,}, S7={,,,}, read-block=B0
+read-ack 0 hit 1 11223344
+# S0={B0/d,,,}, S1={,,,}, S2={,,,}, S3={B3/d,,,}, S4={,,,}, S5={,,,}, S6={,,,}, S7={,,,}, write-block=B4
+write-ack 4 miss 9
+# S0={B0/d,,,}, S1={,,,}, S2={,,,}, S3={B3/d,,,}, S4={B4/d,,,}, S5={,,,}, S6={,,,}, S7={,,,}, read-block=B0
+read-ack 0 hit 1 11223344
+# S0={B0/d,,,}, S1={B1/d,,,}, S2={B2/d,,,}, S3={,,,}, S4={,,,}, S5={,,,}, S6={,,,}, S7={,,,}

@@ -1,0 +1,7 @@
+write-ack 0 miss 9
+read-ack 0 hit 1 11223344
+write-ack 3 miss 9
+read-ack 3 hit 1 11111111
+read-ack 0 hit 1 11223344
+write-ack 4 miss 9
+read-ack 0 hit 1 11223344
